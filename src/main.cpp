@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
                 ceres::CostFunction* cost_function = 
                     new ceres::AutoDiffCostFunction<factor::DopplerFactorCostFunctor, 1, val_num, val_num>(functor);
 
-                // problem.AddResidualBlock(cost_function, nullptr, state[epoch-1], current_position);
+                problem.AddResidualBlock(cost_function, nullptr, state[epoch-1], current_position);
             }
             std::cout << epoch << endl;
         }
@@ -146,7 +146,6 @@ int main(int argc, char** argv) {
             double* position = state[epoch];
             std::cout << std::fixed << std::setprecision(6);
             std::cout << "Epoch(ECEF) " << epoch << ": " << position[0] << ", " << position[1] << ", " << position[2] << ", " << position[3] << "\n";
-            // fout_ecef  << std::fixed << std::setprecision(6);
             fout_ecef << epoch << ", " << position[0] << ", " << position[1] << ", " << position[2] << ", " << position[3] << "\n";
             
             // std::vector<double> ecef_position = {position[0], position[1], position[2]};
@@ -155,7 +154,6 @@ int main(int argc, char** argv) {
             std::vector<double> res = coordinate::ecef2lla(ecef_position);
 
             std::cout << "Epoch(LLA) " << epoch << ": " << res[0] << ", " << res[1] << ", " << res[2] << "\n";
-            // fout_llh  << std::fixed << std::setprecision(6);
             fout_llh << epoch << ", " << res[0] << ", " << res[1] << ", " << res[2] << "\n";
 
             // 공분산 출력
@@ -165,7 +163,6 @@ int main(int argc, char** argv) {
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
                     std::cout << covariance_matrix[3 * i + j] << " ";
-                    // fout_cov << std::fixed << std::setprecision(6);
                     fout_cov << covariance_matrix[3 * i + j] << ", ";
                 }
                 std::cout << "\n";
