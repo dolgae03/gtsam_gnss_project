@@ -71,9 +71,9 @@ int main(int argc, char** argv) {
     // std::vector<double> ref_location = coordinate::lla2ecef({36.372371713580250, 127.358800510185191, 91.642377777777796});
     std::vector<double> ref_location = {-3.119992580788137e+06, 4.086868171897103e+06, 3.761594895585738e+06};
 
-    const size_t val_num = 6; // x, y ,z, t_gps, t_glo,
-    const size_t start_epoch = 0;
-    const size_t T = 1000;
+    const size_t val_num = 6; // x, y ,z, t_gps, t_glo, t_bds
+    const size_t start_epoch = 500;
+    const size_t T = 100;
     const size_t max_epoch = start_epoch + T; 
 
     double* previous_position = nullptr;
@@ -142,7 +142,7 @@ int main(int argc, char** argv) {
                     ceres::CostFunction* cost_function = 
                         new ceres::AutoDiffCostFunction<factor::DopplerFactorCostFunctor, 1, val_num, val_num>(functor);
 
-                    problem.AddResidualBlock(cost_function, nullptr, previous_position, current_position);
+                    // problem.AddResidualBlock(cost_function, nullptr, previous_position, current_position);
                 }
             }
         }
