@@ -139,12 +139,7 @@ int main(int argc, char** argv) {
                     ceres::CostFunction* cost_function = 
                         new ceres::AutoDiffCostFunction<factor::DopplerFactorCostFunctor, 1, val_num, val_num>(functor);
 
-<<<<<<< HEAD
-                    // problem.AddResidualBlock(cost_function, nullptr, previous_position, current_position);
-                }
-=======
-                problem.AddResidualBlock(cost_function, nullptr, state[epoch-1], current_position);
->>>>>>> ca33e0a113a75157a2dd95c21d8e5928e1536e7f
+                // problem.AddResidualBlock(cost_function, nullptr, state[epoch-1], current_position);
             }
         }
 
@@ -209,4 +204,5 @@ int main(int argc, char** argv) {
     fout_cov.close();
 
     return 0;
+    }
 }
